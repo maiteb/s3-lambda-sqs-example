@@ -31,7 +31,7 @@ SQS.
 
 - Adicione o seguinte plugin no `pom.xml` gerado:
 
-```
+```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-shade-plugin</artifactId>
