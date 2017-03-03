@@ -1,2 +1,4 @@
 example/target/
 example/.project
+example/.settings
+example/.classpath
