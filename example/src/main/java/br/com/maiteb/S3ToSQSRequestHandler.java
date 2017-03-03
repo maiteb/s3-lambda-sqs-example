@@ -46,7 +46,6 @@ public class S3ToSQSRequestHandler implements RequestHandler<S3Event, Object> {
     }
 
     private String processEvent(S3EventNotificationRecord event, LambdaLogger logger) {
-
         S3Object object = s3
             .getObject(new GetObjectRequest(event.getS3().getBucket().getName(), event.getS3().getObject().getKey()));
 

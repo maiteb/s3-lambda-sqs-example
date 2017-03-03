@@ -125,3 +125,39 @@ InputStreamReader(object.getObjectContent()))) {
   - Type: ObjectCreated (all)
   - Enabled: true
 
+---
+
+## Enviando mensagem para o SQS
+
+- Adicione a seguinte dependência no `pom.xml`:
+
+```xml
+<dependency>
+	<groupId>com.amazonaws</groupId>
+	<artifactId>amazon-sqs-java-messaging-lib</artifactId>
+	<version>1.0.1</version>
+</dependency>
+```
+
+- O seguinte trecho de código é capaz de enviar uma mensagem para uma fila do SQS já criada:
+
+```java
+   @Override
+    public Object handleRequest(S3Event input, Context context) {
+        List<S3EventNotificationRecord> s3EventNotificationRecords = input.getRecords();
+
+        String queueName = "NOME DA FILA";
+        AmazonSQSClient sqsClient = new AmazonSQSClient();
+        String queueUrl = sqsClient.getQueueUrl(new GetQueueUrlRequest(queueName)).getQueueUrl();
+
+				sendToSQS("mensagem teste", sqsClient, queueUrl);
+
+        return "success";
+    }
+
+    private void sendToSQS(String message, AmazonSQSClient sqsClient, String queueUrl) {
+        SendMessageRequest myMessageRequest = new SendMessageRequest(queueUrl,
+            message);
+        sqsClient.sendMessage(myMessageRequest);
+    }
+```
